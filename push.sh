@@ -2,9 +2,9 @@
 
 for file in ./*; do
     if [ -f "$file" ] && ! git ls-files --error-unmatch "$file" &>/dev/null; then
-        echo "File: $file"
+        echo "File: $(basename $file)"
 		git add "$file"
-		git commit -m "$file"
+		git commit -m "$(basename $file)"
     fi
 done
 
