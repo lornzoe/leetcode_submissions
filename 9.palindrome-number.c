@@ -6,20 +6,21 @@
 
 // @lc code=start
 bool isPalindrome(int x) {
-	unsigned int y = x;
-	unsigned int i = 0;
+	int i = 0;
 
 	if (x < 0)
 		return false;
 	if (x == 0)
 		return true;
+	if (x % 10 == 0)
+		return false;
 			
-	while (y > 0)
+	while (x > i)
 	{
-		i = (i * 10) + (y % 10);
-		y /= 10;
+		i = (i * 10) + (x % 10);
+		x /= 10;
  	} 
-	return (i == x);
+	return (x == i || x == (i / 10));
 }
 // @lc code=end
 
