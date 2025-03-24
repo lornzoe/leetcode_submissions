@@ -7,3 +7,5 @@ for file in ./*; do
 		git commit -m "$file"
     fi
 done
+
+git push
