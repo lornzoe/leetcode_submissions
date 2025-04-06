@@ -27,8 +27,6 @@ double myPow(double x, int n) {
 	}
 	if (n > 0)
 		return power(x, n);
-	return 1 / power(x, -n);
-
 }
 // @lc code=end
 
