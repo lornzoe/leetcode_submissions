@@ -12,45 +12,60 @@
  *     struct ListNode *next;
  * };
  */
- struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+struct ListNode *newNode(int val)
+{
+	struct ListNode *newNode = malloc(sizeof(struct ListNode));
+	newNode->val = val;
+	newNode->next = NULL;
+	return newNode; 
+}
 
-	// if (!list1 && !list2)
-	// 	return NULL;
-
-	struct ListNode start;
-	struct ListNode *itr = &start;
-
-	while (list1 && list2)
-	{
-		if (list1->val < list2->val)
-		{
-			itr->next = list1;
-			list1 = list1->next;
-		}
-		else
-		{
-			itr->next = list2;
-			list2 = list2->next;
-		}
-		itr = itr->next;
-	}
-
-	itr->next = list1 ? list1 : list2;
-
-	return start.next;
+int compare(const void *a, const void *b)
+{
+	return *(int*)a - *(int*)b;
 }
 
 struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
 	if (!listsSize)
 		return NULL;
 
-	for (int i = 1; i < listsSize; i++)
+	int count = 0;
+
+	for (int i = 0; i < listsSize; i++)
 	{
 		if (!lists[i])
 			continue;
-		lists[0] = mergeTwoLists(lists[0], lists[i]);
+		struct ListNode *head = lists[i];
+		while (head)
+		{
+			count++;
+			head = head->next;
+		}
 	}
-	return lists[0];
+
+	int *arr = malloc(sizeof(int) * count);
+	int pos = 0;
+
+	for (int i = 0; i < listsSize; i++)
+	{
+		struct ListNode *head = lists[i];
+		while (head)
+		{
+			arr[pos] = head->val;
+			pos++;
+			head = head->next;
+		}
+	}
+	qsort(arr, count, sizeof(int), compare);
+	
+	struct ListNode start;
+	struct ListNode *ptr = &start;
+	for (int i = 0; i < count; i++)
+	{
+		ptr->next = newNode(arr[i]);
+		ptr = ptr->next;
+	}
+	return start.next;
 }
 // @lc code=end
 
